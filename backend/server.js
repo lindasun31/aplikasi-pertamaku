@@ -4,15 +4,14 @@ import { fileURLToPath } from 'url';
 import sqlite3 from 'sqlite3';
 import cors from 'cors';
 
-const allowedOrigins = ['https://localhost:3000'];
+const app = express();
+app.use(express.json());
+
+// CORS Configuration: Specify allowed origins instead of '*'
+const allowedOrigins = ['http://localhost:3000'];  // <-- Specify allowed origins
 app.use(cors({
-  origin: (origin, callback) => {
-    if (allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  }
+  origin: allowedOrigins,
+  optionsSuccessStatus: 200,
 }));
 
 
