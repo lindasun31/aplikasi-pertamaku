@@ -2,12 +2,12 @@
 import { ref } from 'vue';
 
 const comment = ref('');
-const comments = ref('');
-
+const comments = ref([]);
 const submitComment = () => {
-  comments.value += `<p>${comment.value}</p>`;
+  comments.value.push({ id: Date.now(), text: comment.value });
   comment.value = '';
 };
+
 </script>
 
 <template>
