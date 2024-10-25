@@ -4,12 +4,17 @@ import { fileURLToPath } from 'url';
 import sqlite3 from 'sqlite3';
 import cors from 'cors';
 
-const app = express();
-app.use(express.json())
+const allowedOrigins = ['https://yourtrusteddomain.com'];
 app.use(cors({
-  origin: '*',
-  optionsSuccessStatus: 200,
+  origin: (origin, callback) => {
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  }
 }));
+
 
 const connection = new sqlite3.Database('./db/aplikasi.db')
 
