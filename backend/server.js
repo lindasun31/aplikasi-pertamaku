@@ -4,7 +4,7 @@ import { fileURLToPath } from 'url';
 import sqlite3 from 'sqlite3';
 import cors from 'cors';
 
-const allowedOrigins = ['https://yourtrusteddomain.com'];
+const allowedOrigins = ['https://localhost:3000'];
 app.use(cors({
   origin: (origin, callback) => {
     if (allowedOrigins.includes(origin)) {
