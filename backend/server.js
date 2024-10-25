@@ -13,14 +13,16 @@ app.use(cors({
 
 const connection = new sqlite3.Database('./db/aplikasi.db')
 
-app.get('/api/user/:id', (req, res) => {
-  const query = `SELECT * FROM users WHERE id = ${req.params.id}`;
-  console.log(query)
-  connection.all(query, (error, results) => {
-    if (error) throw error;
-    res.json(results);
+app.get("/api/user/:id", (req, res) => {
+  connection.get("SELECT * FROM users WHERE id = ?", [req.params.id], (error, result) => {
+    if (error) {
+      res.status(500).json({ error: 'Database error' });
+    } else {
+      res.json(result);
+    }
   });
 });
+
 
 app.post('/api/user/:id/change-email', (req, res) => {
   const newEmail = req.body.email;
