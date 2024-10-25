@@ -7,11 +7,21 @@ const users = ref(null);
 const newEmail = ref('');
 
 const getUser = async () => {
+  if (!Number.isInteger(Number(userId.value)) || userId.value <= 0) {
+    alert("Invalid User ID");
+    return;
+  }
   const response = await fetch(`http://localhost:3000/api/user/${userId.value}`);
   users.value = await response.json();
 };
 
+
 const changeEmail = async () => {
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailPattern.test(newEmail.value)) {
+    alert("Invalid email format");
+    return;
+  }
   await fetch('http://localhost:3000/api/change-email', {
     method: 'POST',
     headers: {
@@ -20,6 +30,7 @@ const changeEmail = async () => {
     body: `email=${newEmail.value}`,
   });
 };
+
 </script>
 
 <template>
